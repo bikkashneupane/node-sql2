@@ -1,0 +1,80 @@
+-- DATABASE ---
+1. Create a database
+    CREATE DATABASE <database-name>
+2. Drop a database  
+    DROP DATABASE <database-name>
+3. Backup a database  (full backup) 
+    BACKUP DATABASE <database_name>
+4. Backup database with Differential -> Only backups the parts of the db that have changed since the last full db backup
+
+5. USE database 
+    USE <database_name>
+    ---->>> Can be used from anywhere, even if you are inside another database
+
+
+-- TABLE --
+1. Create a TABLE
+    CREATE TABLE <table_name> (
+        <colume_1> <data_type>,
+        email varchar(255) NOT NULL
+    );
+
+2. Create a table using another existing table
+    CREATE TABLE <table_name> AS 
+        SELECT <column_1>, <column_2>, ...
+        FROM <existing_table_name>
+        WHERE ...;
+
+3. DROP a table
+    DROP TABLE <table_name>
+
+4. Delete data of table but not the table (TRUNCATE TABLE)
+    TRUNCATE TABLE <table_name>
+
+5. Alter table (add,delete,modify columns in an existing table) 
+                -->> Also used to add or drop various constraints on an existing table
+    ALTER TABLE <table_name>
+    ADD <column_name> <data_type>;       -- Add new column
+    DROP COLUMN <column_name>;           -- delete a column
+    RENAME COLUMN <old_name> <new_name>; -- rename a column
+
+    -- ALTER TABLE - ALTER/MODIFY DATATYPE
+    ALTER COLUMN <column_name> <data_type>; -- SQL Server / MS Access
+    MODIFY COLUMN column_name datatype;     -- My SQL / Oracle (prior version 10G)
+    MODIFY column_name datatype;            -- Oracle 10G and later
+
+
+-- SQL CONSTRAINTS ---
+- NOT NULL - Ensures that a column cannot have a NULL value
+- UNIQUE - Ensures that all values in a column are different
+- PRIMARY KEY - A combination of a NOT NULL and UNIQUE. Uniquely identifies each row in a table
+- FOREIGN KEY - Prevents actions that would destroy links between tables
+- CHECK - Ensures that the values in a column satisfies a specific condition
+- DEFAULT - Sets a default value for a column if no value is specified
+- CREATE INDEX - Used to create and retrieve data from the database very quickly
+
+-- Drop a unique constraint in a column
+    ALTER TABLE <table_name>
+    DROP CONSTRAINTS <column_name>
+
+-- Primary Key
+    -- MySQL
+        CREATE TABLE Persons (
+            ID int NOT NULL,
+            PRIMARY KEY (ID)
+        );
+    
+    -- Drop Primary Key Constraint
+        -- My SQL:
+            ALTER TABLE Persons
+            DROP PRIMARY KEY;
+
+
+-- Foreign Key
+    -- MySQL
+        CREATE TABLE Orders (
+            OrderID int NOT NULL,
+            PersonID int,
+            PRIMARY KEY (OrderID),
+            FOREIGN KEY (PersonID) REFERENCES Persons(PersonID) 
+        );
